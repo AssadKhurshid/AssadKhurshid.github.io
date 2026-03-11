@@ -249,6 +249,33 @@ h1 em { font-style: normal; color: var(--accent); }
 }
 .chip:hover { border-color: var(--accent); color: var(--accent); }
 .about-cards { display: flex; flex-direction: column; gap: 14px; }
+
+/* Photo card */
+.photo-card {
+  background: var(--bg-3); border: 1px solid var(--border-hi);
+  border-radius: 16px; padding: 24px;
+  display: flex; align-items: center; gap: 20px;
+  margin-bottom: 4px;
+}
+.profile-photo {
+  width: 88px; height: 88px; border-radius: 50%;
+  object-fit: cover; object-position: top;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-dim);
+  flex-shrink: 0;
+}
+.photo-name { font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; margin-bottom: 3px; }
+.photo-title { font-size: .8rem; color: var(--muted); font-family: var(--font-mono); margin-bottom: 8px; }
+.photo-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: .72rem;
+  color: var(--accent); background: var(--accent-dim);
+  padding: 3px 10px; border-radius: 100px;
+}
+.status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); animation: pulse 2s infinite;
+}
 .info-card {
   background: var(--bg-3); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 18px 20px;
