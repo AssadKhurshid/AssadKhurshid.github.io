@@ -1,0 +1,4 @@
+Place these two files in this folder:
+
+1. Assad_Khurshid_Resume.pdf   ← your resume PDF
+2. photo.jpg                   ← your headshot (optional but recommended)
