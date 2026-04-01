@@ -1,2 +1,0 @@
-# Assad Khurshid — Portfolio Website
-
