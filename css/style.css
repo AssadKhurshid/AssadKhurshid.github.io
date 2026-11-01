@@ -138,14 +138,10 @@ figcaption { position: absolute; inset: auto 0 0; display: flex; justify-content
 .skills > div, .edu > div { border-top: 2px solid var(--ink); padding-top: 14px; }
 
 /* Photo strip */
-/* Polaroid-style cards, slightly tilted, straighten on hover */
-.strip { display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(20px, 3vw, 40px); padding-block: clamp(60px, 8vw, 110px); }
-.strip figure { width: min(260px, 42vw); aspect-ratio: 4/5; border-radius: 16px; border: 8px solid #fff; box-shadow: 0 14px 30px rgba(26,25,26,.15); transition: transform .35s, box-shadow .35s; }
-.strip figure:nth-child(1) { transform: rotate(-4deg); }
-.strip figure:nth-child(2) { transform: rotate(2deg) translateY(18px); }
-.strip figure:nth-child(3) { transform: rotate(-1.5deg); }
-.strip figure:hover { transform: rotate(0) translateY(-6px); box-shadow: 0 22px 40px rgba(26,25,26,.22); z-index: 1; }
-.strip figcaption { padding: 10px 12px; font-size: 1.1rem; }
+.strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; padding: 0; }
+.strip figure { aspect-ratio: 3/4; }
+.strip img { filter: grayscale(1); transition: filter .4s, transform .6s; }
+.strip figure:hover img { filter: none; transform: scale(1.03); }
 
 /* Contact */
 .contact { background: var(--ink); color: var(--cream); margin-top: var(--slant); padding-bottom: 40px; }
@@ -185,6 +181,7 @@ figcaption { position: absolute; inset: auto 0 0; display: flex; justify-content
   .now-grid { grid-template-columns: 1fr; }
   .stats-photo { max-width: 260px; }
   .about-photo { position: static; max-width: 280px; }
+  .strip { grid-template-columns: 1fr 1fr; }
   .strip figure:last-child { display: none; }
 }
 @media (max-width: 600px) {
