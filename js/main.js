@@ -1,52 +1,36 @@
-/* Assad Khurshid Portfolio v2 — main.js */
-
-// ── Fade-in on scroll ──────────────────────
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 90);
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-// ── Nav: scroll shadow + active links ─────
-const navbar = document.getElementById('navbar');
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 20);
-  let current = '';
-  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) current = s.id; });
-  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
-}, { passive: true });
-
-// ── Hamburger ──────────────────────────────
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('navLinks');
-hamburger.addEventListener('click', () => navMenu.classList.toggle('open'));
-navMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navMenu.classList.remove('open')));
-
-// ── Smooth scroll with offset ──────────────
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', e => {
-    const target = document.querySelector(anchor.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 75, behavior: 'smooth' });
-    }
-  });
+// Mobile menu
+const burger = document.getElementById('burger');
+const links = document.getElementById('navLinks');
+burger.addEventListener('click', () => {
+  const open = links.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open);
+});
+links.addEventListener('click', e => {
+  if (e.target.tagName === 'A') { links.classList.remove('open'); burger.setAttribute('aria-expanded', false); }
 });
 
-// ── Form submit feedback ───────────────────
-const form = document.querySelector('.contact-form');
-if (form) {
-  form.addEventListener('submit', () => {
-    const btn = form.querySelector('.form-btn');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-    setTimeout(() => { btn.textContent = 'Send Message →'; btn.disabled = false; }, 3000);
-  });
+// Statement: words light up as the section scrolls past
+const text = document.querySelector('.reveal-text');
+text.innerHTML = text.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' ');
+const words = text.querySelectorAll('.w');
+const toTop = document.getElementById('toTop');
+
+function onScroll() {
+  const r = text.getBoundingClientRect();
+  const h = window.innerHeight;
+  const progress = Math.min(1, Math.max(0, (h * 0.85 - r.top) / (r.height + h * 0.35)));
+  const lit = Math.round(progress * words.length);
+  words.forEach((w, i) => w.classList.toggle('on', i < lit));
+  toTop.classList.toggle('show', window.scrollY > h);
 }
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// Fade blocks in when they enter the viewport
+const io = new IntersectionObserver(entries => entries.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: 0.12 });
+document.querySelectorAll('.now-card, .project, .xp li, .stats-grid > div, .about-text, .form').forEach(el => {
+  el.classList.add('fade');
+  io.observe(el);
+});
